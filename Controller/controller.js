@@ -11,7 +11,7 @@ class Products {
   static imageUpload = async (req, res) => {
     res.json({
       success: true,
-      image_url: `http://localhost:8000/images/${req.file.filename}`,
+      image: req.file.filename,
     });
   };
 
