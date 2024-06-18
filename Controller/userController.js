@@ -63,12 +63,16 @@ class User{
                     res.json({ success : true ,  token: token  , userdata : user  });
     
                 }
+                else{
+                  res.json({ success : false ,  status  : 401  });
+
+                }
     
              
             }
 
             else {
-                res.json({ success : false ,  error: "user not found" });
+                res.json({ success : false ,  status : 402 });
             }
 
       
