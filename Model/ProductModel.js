@@ -28,7 +28,11 @@ const ProductSchema = mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now,
+    default: () => {
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 4);
+      return currentDate;
+    },
   },
 
   available: {
