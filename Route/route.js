@@ -6,6 +6,7 @@ import User from "../Controller/userController.js";
 import Product from "../Model/ProductModel.js";
 import fetchUser from "../Middleware/Auth.js";
 import CheckOut from "../Controller/checkoutcontroller.js";
+import OrderClass from "../Controller/orderController.js";
 
 const router = express.Router();
 
@@ -34,6 +35,8 @@ router.post("/addtocart", fetchUser, Products.addToCart);
 router.post("/removefromcart", fetchUser, Products.removetocart);
 router.get("/getcart", fetchUser, Products.getcart);
 router.post("/payment", Products.Stripe);
+router.post("/removAllCart" , Products.removeAllCart)
+
 
 // user route
 
@@ -45,5 +48,13 @@ router.post("/login", User.login);
 router.post("/checkout", fetchUser, CheckOut.addcheckout);
 router.put("/ordercancel", fetchUser, CheckOut.cancelOrder);
 router.get("/allcart", fetchUser, CheckOut.allcheckout);
+
+
+
+// order route
+router.post("/addToOrder" ,OrderClass.addOrder)
+router.get("/getAllOrder/:email" , OrderClass.getAllOrder)
+router.delete("/delete/:id" , OrderClass.deleteOrder)
+
 
 export default router;

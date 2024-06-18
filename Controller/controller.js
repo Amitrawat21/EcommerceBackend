@@ -167,6 +167,41 @@ class Products {
     }
   };
 
+
+
+  static removeAllCart = async (req, res) => {
+    const { email } = req.body;
+    try {
+      const userData = await userSchema.findOne({ email: email });
+  
+      if (!userData) {
+        return res.status(404).json({ message: "User not found" });
+      } else {
+        // Reset all cart items to 0
+        const updatedCartData = {};
+        for (let item in userData.cartData) {
+          updatedCartData[item] = 0;
+        }
+  
+        // Use findOneAndUpdate with $set to update the cartData field
+        await userSchema.findOneAndUpdate(
+          { email: email },
+          { $set: { cartData: updatedCartData } },
+          { new: true }
+        );
+  
+        console.log(updatedCartData, "updated cart data");
+        res.json({ success: true, message: "All cart items removed successfully" });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+  
+
+  
+
   static getcart = async (req, res) => {
     try {
       let userData = await userSchema.findOne({ _id: req.user });
